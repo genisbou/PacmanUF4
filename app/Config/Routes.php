@@ -18,33 +18,35 @@ $routes->get('/', 'Home::index');
 $routes->get('/cell', 'Home::testCell');
 
 $routes->get('daw/demo','Home::index');
-$routes->get('layout','PagesController::view_layout');
 
-// 'elmeusuperestil/00ffff.css') 
-$routes->get('elmeusuperestil/(:segment).css','Home::elmeusuperestil/$1');
+// Users
+$routes->post('api/create_user', 'UserController::register');
+$routes->post('api/login', 'UserController::login');
+$routes->get('api/logged',  'UserController::logged',  ['filter' => 'jwt']);
+$routes->put('api/update_user/(:segment)', 'UserController::update');
+$routes->post('api/logout', 'UserController::logout');
 
-$routes->get('news', 'NewsController::index');
+// Config game
+$routes->post('api/config_game', 'UserController::configGame'); // Nova config
+$routes->put('api/update_config_game', 'UserController::updateConfigGame');
 
-$routes->get('news/page', 'NewsController::list_pager');
+// Partides
+$routes->get('api/partides', 'PartidesController::index'); // Llista partides
+$routes->get('api/get_user_last_games',  'PartidesController::get_user_last_games');
+$routes->get('api/get_top_users',   'PartidesController::get_top_users');
+$routes->get('api/get_user_stats', 'PartidesController::getUserStats');
+$routes->post('api/add_game', 'PartidesController::create'); //  nova partida
+$routes->post('api/partides', 'PartidesController::create'); // Desa nova partida
 
-$routes->get('news/create', 'NewsController::create');
-$routes->post('news/create', 'NewsController::create_post');
 
-// $routes->match(['get','post'], 'news/create', 'NewsController::create_global');
+$routes->get('api/partides/(:segment)', 'PartidesController::show/$1'); // Mostra una partida
+$routes->get('api/partides/(:segment)/edit', 'PartidesController::edit/$1'); // Formulari editar
+$routes->put('api/partides/(:segment)', 'PartidesController::update/$1'); // Desa canvis
+$routes->patch('api/partides/(:segment)', 'PartidesController::update/$1'); // Alternativa a put
+$routes->delete('api/partides/(:segment)', 'PartidesController::delete/$1'); // Elimina
 
-$routes->get('news/(:segment)', 'NewsController::view/$1');
 
-// $routes->get('pagina/inici',"PagesController::inici");
-// $routes->get('pagina/about',"PagesController::about");
-// $routes->get('pagina/contacta',"PagesController::contacta");
-// $routes->get('pagina/mapa',"PagesController::mapa");
 
-// $routes->get('pagina/(:num)',"PagesController::view/$1"); 
-// segment =>   qualsevol combinacio de lletres/numeros sense la / de url
-// /path_to_algu
-// any => /path_to_algu > $1 = path_to_algu
-// any => /ath/to/algu  > $1 = ath/to/algu
-$routes->get('pagina/(:segment)',"PagesController::view/$1"); 
 // http://localhost/pagina/chupiguay -> PagesController::view('chupiguay')
 
 // Aquesta configuració faria que mai s'entri a privada/algo, ja que any ja inclouria privada
