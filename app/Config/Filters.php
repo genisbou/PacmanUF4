@@ -2,6 +2,7 @@
 
 namespace Config;
 
+use App\Filters\CorsFilter;
 use App\Filters\JWTFilter;
 use CodeIgniter\Config\Filters as BaseFilters;
 use CodeIgniter\Filters\Cors;
@@ -31,7 +32,7 @@ class Filters extends BaseFilters
         'honeypot'      => Honeypot::class,
         'invalidchars'  => InvalidChars::class,
         'secureheaders' => SecureHeaders::class,
-        'Cors'          => Cors::class,
+        'cors'          => CorsFilter::class,
         'jwt'           => JWTFilter::class,
         'forcehttps'    => ForceHTTPS::class,
         'pagecache'     => PageCache::class,
@@ -71,16 +72,19 @@ class Filters extends BaseFilters
      */
     public array $globals = [
         'before' => [
+            'cors',
             // 'honeypot',
 //            'csrf' => ['except' => ['api/*', 'fileconnector']],
             'csrf' => ['except' => ['api/*', 'fileconnector']],
-            'Cors',
+
             // 'invalidchars',
         ],
         'after' => [
+            'cors',
             // 'honeypot',
             // 'secureheaders',
             'toolbar' => ['except' => 'elmeusuperestil/*'],
+
         ],
     ];
 

@@ -18,6 +18,8 @@ $routes->get('/', 'Home::index');
 $routes->get('/cell', 'Home::testCell');
 
 $routes->get('daw/demo','Home::index');
+$routes->options('api/login', 'CorsController::preflight');
+
 
 // Users
 $routes->post('api/create_user', 'UserController::register');
